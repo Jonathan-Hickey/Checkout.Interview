@@ -43,6 +43,7 @@ namespace Checkout.Gateway.MerchantExample
             else
             {
                 var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(content);
             }
 
             Console.ReadLine();

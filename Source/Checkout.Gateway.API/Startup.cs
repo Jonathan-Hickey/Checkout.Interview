@@ -24,12 +24,13 @@ namespace Checkout.Gateway.API
             services.AddControllers();
 
             services.AddAuthentication("Bearer")
-                    .AddJwtBearer("Bearer", options =>
+                    .AddOAuth2Introspection(options =>
                     {
                         options.Authority = "https://localhost:5002";
-                        options.RequireHttpsMetadata = false;
-                        options.Audience = "PaymentGateway";
-                    });
+                        options.ClientId = "PaymentGateway";
+                        options.ClientSecret = "secret";
+                    }
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

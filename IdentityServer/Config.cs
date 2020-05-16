@@ -19,6 +19,9 @@ namespace IdentityServer
             new ApiResource[]
             {
                 new ApiResource("PaymentGateway", "Checkout.com Payment Gateway")
+                {
+                    ApiSecrets = { new Secret("secret".Sha256()) }
+                }
             };
         
         public static IEnumerable<Client> Clients =>
@@ -37,6 +40,7 @@ namespace IdentityServer
                         new Secret("CodingInterview".Sha256())
                     },
 
+                    AccessTokenType = AccessTokenType.Reference,
                     // scopes that client has access to
                     AllowedScopes = { "PaymentGateway" }
                 }

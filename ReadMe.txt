@@ -85,6 +85,7 @@ Tickets and Task (Breaking down the project)
     - Basic logging (Done)
     - Adding swagger
     - Adding Auth (Done)
+        - Change auth not to use JWT Tokens, instead use reference tokens (Done)
     - Adding Payment Endpoint
     - Adding Getting Payment Details Endpoint
     - 
@@ -113,3 +114,7 @@ https://blog.rsuter.com/logging-with-ilogger-recommendations-and-best-practices/
 
 IdentityServer4 QuickStart 
 https://identityserver4.readthedocs.io/en/latest/quickstarts/1_client_credentials.html
+
+I might be using the wrong type of tokens 
+http://docs.identityserver.io/en/release/topics/reference_tokens.html
+https://leastprivilege.com/2015/11/25/reference-tokens-and-introspection/
