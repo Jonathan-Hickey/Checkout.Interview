@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Checkout.Gateway.API.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("[controller]")] 
+    [Route("Payment")] 
     public class PaymentController : ControllerBase
     {
         private readonly ILogger<PaymentController> _logger;

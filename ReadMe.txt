@@ -40,7 +40,7 @@ Implementation ideas + design
 
 From reading the "Extra mile bonus points" section I will be addressing the following with the implementation
     - Application logging (Console logging)
-    - Authentication (in-memory store of allowed keys)
+    - Authentication (in-memory store set up using identity server 4)
     - API client (will allow you to easly call API)
     - Encryption (PAN will be be one way hashed)
     - Data storage (In memory)
@@ -84,7 +84,7 @@ Tickets and Task (Breaking down the project)
     - build and deployment (I'm not doing this step, but this is the time I would getting the CI/CD working to test and production enviroments. Along with verifying unit tests are running)
     - Basic logging (Done)
     - Adding swagger
-    - Adding Auth
+    - Adding Auth (Done)
     - Adding Payment Endpoint
     - Adding Getting Payment Details Endpoint
     - 
@@ -108,4 +108,8 @@ One way Hashing
         https://stackoverflow.com/a/2117808
 
 
+Interesting blog about logging
 https://blog.rsuter.com/logging-with-ilogger-recommendations-and-best-practices/
+
+IdentityServer4 QuickStart 
+https://identityserver4.readthedocs.io/en/latest/quickstarts/1_client_credentials.html

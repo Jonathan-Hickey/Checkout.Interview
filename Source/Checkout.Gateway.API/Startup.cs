@@ -22,7 +22,14 @@ namespace Checkout.Gateway.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddAuthentication()
+
+            services.AddAuthentication("Bearer")
+                    .AddJwtBearer("Bearer", options =>
+                    {
+                        options.Authority = "https://localhost:5002";
+                        options.RequireHttpsMetadata = false;
+                        options.Audience = "PaymentGateway";
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +50,7 @@ namespace Checkout.Gateway.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
