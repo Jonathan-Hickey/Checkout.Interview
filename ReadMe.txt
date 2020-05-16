@@ -79,10 +79,10 @@ Lets talk security
 ---------------------------------------------------------------------------------
 Tickets and Task (Breaking down the project)
 
-    - Reading and Understanding of Spec
-    - Set up a blank api (Hello world style), include unit tests (Assert.Pass()  style) 
+    - Reading and Understanding of Spec (Done)
+    - Set up a blank api (Hello world style), include unit tests (Assert.Pass()  style) (Done)
     - build and deployment (I'm not doing this step, but this is the time I would getting the CI/CD working to test and production enviroments. Along with verifying unit tests are running)
-    - Basic logging
+    - Basic logging (Done)
     - Adding swagger
     - Adding Auth
     - Adding Payment Endpoint
@@ -106,3 +106,6 @@ One way Hashing
     https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm?view=netcore-3.1
     https://stackoverflow.com/questions/2117732/reasons-why-sha512-is-superior-to-md5
         https://stackoverflow.com/a/2117808
+
+
+https://blog.rsuter.com/logging-with-ilogger-recommendations-and-best-practices/
