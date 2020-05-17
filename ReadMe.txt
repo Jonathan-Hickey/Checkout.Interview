@@ -8,6 +8,7 @@ Understanding of specifaction
         - PCI
         - Logging? 
     - This will call the Acquiring Bank
+    
     - Request Model 
         - card number
         - expiry month/date
@@ -44,7 +45,8 @@ From reading the "Extra mile bonus points" section I will be addressing the foll
     - API client (will allow you to easly call API)
     - Encryption (PAN will be be one way hashed)
     - Data storage (In memory)
-    - Swagger for easy testing
+    ~- Swagger for easy testing~ 
+        -I have set up intergation tests so might not need this. Down side will be no auto generation of documentation. Maybe revisit once everything else is done
 
 I will also hard code some values in a class called SecretKeyService which in real life would be calling a key 
 store so that we never be storing any sensitive passwords or other data on disk.   
@@ -86,7 +88,10 @@ Tickets and Task (Breaking down the project)
     - Adding swagger
     - Adding Auth (Done)
         - Change auth not to use JWT Tokens, instead use reference tokens (Done)
+    - Added Integration Project
+        -  These tests will show the merchant interaction 
     - Adding Payment Endpoint
+        - 
     - Adding Getting Payment Details Endpoint
     - 
 

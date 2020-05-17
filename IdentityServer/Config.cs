@@ -29,8 +29,8 @@ namespace IdentityServer
             {
                 new Client
                 {
-                    ClientId = "MerchantApi",
-
+                    ClientId = "b074e29b-54bc-4085-a97d-5a370cafa598",
+                    ClientName = "MerchantApi",
                     // no interactive user, use the clientid/secret for authentication
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
 
@@ -42,7 +42,8 @@ namespace IdentityServer
 
                     AccessTokenType = AccessTokenType.Reference,
                     // scopes that client has access to
-                    AllowedScopes = { "PaymentGateway" }
+                    AllowedScopes = { "PaymentGateway" },
+                    
                 }
             };
         

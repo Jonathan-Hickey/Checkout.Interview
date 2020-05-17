@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Checkout.Gateway.API.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -6,7 +8,7 @@ namespace Checkout.Gateway.API.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("Payment")] 
+    [Route("merchant/{merchantId}/payment")] 
     public class PaymentController : ControllerBase
     {
         private readonly ILogger<PaymentController> _logger;
@@ -16,12 +18,25 @@ namespace Checkout.Gateway.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpPost]
+        [Route("card")]
+        public IActionResult CreatePayment(Guid merchantId, CardPaymentRequest cardPaymentRequest)
         {
-            _logger.LogInformation("Incoming request");
+            if (User.GetMerchantId() != merchantId)
+            {
+                _logger.LogCritical($"Access token for merchantId {User.GetMerchantId()} might be compromised. Request made using different merchant Id {merchantId}");
+                return Unauthorized();
+            };
 
-            return Ok("Hello World");
+            if (cardPaymentRequest == null)
+            {
+                _logger.LogInformation("cardPaymentRequest is null");
+                return BadRequest();
+            }
+            
+            _logger.LogInformation("Incoming request");
+            
+            return Created("", ""); 
         }
     }
 }
