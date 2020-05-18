@@ -3,9 +3,9 @@ using Checkout.Gateway.API.Models.Models;
 
 namespace Checkout.Gateway.API.Models.Requests
 {
-    public class CardPaymentRequest
+    public class CardPaymentRequestDto
     {
-        public CardInformation CardInformation { get; set; }
+        public CardInformationDto CardInformationDto { get; set; }
         
         public decimal Amount { get; set; }
 
@@ -27,6 +27,6 @@ namespace Checkout.Gateway.API.Models.Requests
             }
         }
         
-        public Address BillingAddress { get; set; }
+        public AddressDto BillingAddressDto { get; set; }
     }
 }

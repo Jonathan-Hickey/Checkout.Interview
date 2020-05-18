@@ -3,6 +3,7 @@
     //https://docs.checkout.com/docs/response-codes#section-overview
     public enum PaymentStatus
     {
+        Created = 1,
         Approved = 10000,
         SoftDecline = 20000,
         HardDecline = 30000,

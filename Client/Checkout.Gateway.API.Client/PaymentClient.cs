@@ -13,7 +13,7 @@ namespace Checkout.Gateway.API.Client
 
     public interface IPaymentClient
     {
-        Task<CardPaymentResponse> CreateCardPaymentAsync(CardPaymentRequest cardPaymentRequest);
+        Task<CardPaymentResponseDto> CreateCardPaymentAsync(CardPaymentRequestDto cardPaymentRequestDto);
     }
 
     public class PaymentClient : IPaymentClient
@@ -33,7 +33,7 @@ namespace Checkout.Gateway.API.Client
         }
 
 
-        public async Task<CardPaymentResponse> CreateCardPaymentAsync(CardPaymentRequest cardPaymentRequest)
+        public async Task<CardPaymentResponseDto> CreateCardPaymentAsync(CardPaymentRequestDto cardPaymentRequestDto)
         {
            
             var response = await _httpClient.SendAsync(new HttpRequestMessage
@@ -44,7 +44,7 @@ namespace Checkout.Gateway.API.Client
                 },
                 RequestUri = _paymentRoutes.GetCardPaymentUri(),
                 Method = HttpMethod.Post,
-                Content = new StringContent(JsonSerializer.Serialize(cardPaymentRequest), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonSerializer.Serialize(cardPaymentRequestDto), Encoding.UTF8, "application/json")
             });
 
             if (!response.IsSuccessStatusCode)
@@ -52,7 +52,7 @@ namespace Checkout.Gateway.API.Client
                 throw new CheckoutGatewayException(response);
             }
 
-            return JsonSerializer.Deserialize<CardPaymentResponse>(await response.Content.ReadAsStringAsync());
+            return JsonSerializer.Deserialize<CardPaymentResponseDto>(await response.Content.ReadAsStringAsync());
         }
     }
 }

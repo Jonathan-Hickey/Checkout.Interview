@@ -123,3 +123,9 @@ https://identityserver4.readthedocs.io/en/latest/quickstarts/1_client_credential
 I might be using the wrong type of tokens 
 http://docs.identityserver.io/en/release/topics/reference_tokens.html
 https://leastprivilege.com/2015/11/25/reference-tokens-and-introspection/
+
+
+Maybe look into  this later
+https://saijogeorge.com/dummy-credit-card-generator/
+which leads me to https://www.geeksforgeeks.org/luhn-algorithm/
+https://money.howstuffworks.com/personal-finance/debt-management/credit-card1.htm

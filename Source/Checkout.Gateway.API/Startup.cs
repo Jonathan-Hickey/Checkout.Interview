@@ -1,4 +1,5 @@
 using System.Text;
+using Checkout.Gateway.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,11 @@ namespace Checkout.Gateway.API
                         options.ClientSecret = "secret";
                     }
                 );
+
+            services.RegisterMappers();
+            services.RegisterServices();
+            services.RegisterClients();
+            services.RegisterRepositories();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

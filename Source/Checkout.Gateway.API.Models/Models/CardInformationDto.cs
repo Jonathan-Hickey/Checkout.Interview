@@ -1,6 +1,6 @@
 ﻿namespace Checkout.Gateway.API.Models.Models
 {
-    public class CardInformation
+    public class CardInformationDto
     {
         public string CardNumber { get; set; }
         public string ExpiryMonth { get; set; }

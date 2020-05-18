@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Checkout.Gateway.API.Models.Requests;
+using Checkout.Gateway.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,15 +14,17 @@ namespace Checkout.Gateway.API.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly ILogger<PaymentController> _logger;
+        private readonly IPaymentService _paymentService;
 
-        public PaymentController(ILogger<PaymentController> logger )
+        public PaymentController(ILogger<PaymentController> logger, IPaymentService paymentService)
         {
+            _paymentService = paymentService;
             _logger = logger;
         }
 
         [HttpPost]
         [Route("card")]
-        public IActionResult CreatePayment(Guid merchantId, CardPaymentRequest cardPaymentRequest)
+        public async Task<IActionResult> CreatePaymentAsync(Guid merchantId, CardPaymentRequestDto cardPaymentRequestDto)
         {
             if (User.GetMerchantId() != merchantId)
             {
@@ -28,15 +32,17 @@ namespace Checkout.Gateway.API.Controllers
                 return Unauthorized();
             };
 
-            if (cardPaymentRequest == null)
+            if (cardPaymentRequestDto == null)
             {
-                _logger.LogInformation("cardPaymentRequest is null");
+                _logger.LogInformation("cardPaymentRequestDto is null");
                 return BadRequest();
             }
-            
-            _logger.LogInformation("Incoming request");
-            
-            return Created("", ""); 
+
+            _logger.LogInformation("Incoming requestDto");
+
+            var response = await _paymentService.CreateCardPaymentAsync(merchantId, cardPaymentRequestDto);
+
+            return Created("", response); 
         }
     }
 }

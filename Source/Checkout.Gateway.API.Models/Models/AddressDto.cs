@@ -1,6 +1,6 @@
 ﻿namespace Checkout.Gateway.API.Models.Models
 {
-    public class Address
+    public class AddressDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

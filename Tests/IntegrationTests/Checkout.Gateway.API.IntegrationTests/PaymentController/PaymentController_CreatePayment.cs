@@ -7,6 +7,7 @@ using Checkout.Gateway.API.Client.Routes;
 using Checkout.Gateway.API.Models.Enums;
 using Checkout.Gateway.API.Models.Models;
 using Checkout.Gateway.API.Models.Requests;
+using FluentAssertions;
 using IdentityModel.Client;
 using NUnit.Framework;
 
@@ -20,27 +21,45 @@ namespace Checkout.Gateway.API.IntegrationTests.PaymentController
         {
             var accessToken = await GetReferenceAccessToken();
 
-            Guid merchantId = Guid.Parse("");
+            Guid merchantId = Guid.Parse("b074e29b-54bc-4085-a97d-5a370cafa598");
             var baseUri = "https://localhost:5001";
             var apiClient = new HttpClient();
             var paymentClient = new PaymentClient(apiClient, new PaymentRoutes(merchantId, baseUri), accessToken);
 
-            var cardPaymentRequest = new CardPaymentRequest
+            var cardPaymentRequest = new CardPaymentRequestDto
             {
+                Amount = 100m,
                 Currency = Currency.GBP,
-                CardInformation = new CardInformation(),
-                Amount = 10.0m,
-                BillingAddress = new Address()
+                BillingAddressDto = new AddressDto()
+                {
+                    AddressLine1 = "Random Flat in",
+                    AddressLine2 = "Canary Wharf",
+                    City = "London",
+                    Country = "England",
+                    FirstName = "Joe",
+                    LastName = "Blogs"
+                },
+                CardInformationDto = new CardInformationDto()
+                {
+                    CardNumber = "366252948156588",
+                    FirstName = "Joe",
+                    LastName = "Blogs",
+                    Cvv = "1011",
+                    ExpiryMonth = "01",
+                    ExpiryYear = "24"
+                }
             };
 
             try
             {
                 var response = await paymentClient.CreateCardPaymentAsync(cardPaymentRequest);
-                Assert.True(true);
+                response.PaymentId.Should().NotBeEmpty();
+                response.MerchantId.Should().Be(merchantId);
+                response.PaymentStatus.Should().Be(PaymentStatus.Created);
             }
             catch (CheckoutGatewayException gatewayException)
             {
-                Assert.False(true);
+                Assert.Fail();
             }
         }
 
