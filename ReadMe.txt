@@ -129,3 +129,9 @@ Maybe look into  this later
 https://saijogeorge.com/dummy-credit-card-generator/
 which leads me to https://www.geeksforgeeks.org/luhn-algorithm/
 https://money.howstuffworks.com/personal-finance/debt-management/credit-card1.htm
+
+
+hash-and-salt-passwords-in-c-sharp
+https://stackoverflow.com/questions/2138429/hash-and-salt-passwords-in-c-sharp
+Idea being that each hash should have its own salt... but then we would end up storing the same card number over and over again... good or bad?
+

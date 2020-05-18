@@ -4,17 +4,10 @@ using Checkout.Gateway.API.Models;
 
 namespace Checkout.Gateway.API.FakeDataStores
 {
-    public interface ICardInformationDataStore
-    {
-        CardInformation AddCardInformation();
-        CardInformation GetCardInformation(int cardInformationId);
-
-    }
-
     public class CardInformationDataStore : ICardInformationDataStore
     {
         public readonly List<CardInformation> _cards;
-        
+
         public CardInformationDataStore()
         {
             _cards = new List<CardInformation>();
@@ -26,7 +19,12 @@ namespace Checkout.Gateway.API.FakeDataStores
             return _cards.Single(c => c.CardInformationId == cardInformationId);
         }
 
-        public CardInformation AddCardInformation()
+        public CardInformation AddCardInformation(string firstName,
+                                                  string lastName,
+                                                  string expiryMonth, 
+                                                  string expiryYear,
+                                                  string hashedCardNumber, 
+                                                  string maskedCardNumber)
         {
             //Not thread safe
             var maxId = 1;
@@ -37,7 +35,13 @@ namespace Checkout.Gateway.API.FakeDataStores
 
             var card = new CardInformation
             {
-                CardInformationId = maxId
+                CardInformationId = maxId,
+                LastName = lastName,
+                FirstName = firstName,
+                ExpiryMonth = expiryMonth,
+                ExpiryYear = expiryYear,
+                CardNumberHash = hashedCardNumber,
+                CardNumberMask = maskedCardNumber,
             };
 
             _cards.Add(card);

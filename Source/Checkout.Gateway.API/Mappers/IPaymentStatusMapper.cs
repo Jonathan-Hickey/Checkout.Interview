@@ -6,6 +6,4 @@ namespace Checkout.Gateway.API.Mappers
     {
         PaymentStatus Map(string status);
     }
-
-
 }

@@ -75,7 +75,7 @@ namespace Checkout.Gateway.API.Tests.Controllers
                     FirstName = "Joe",
                     LastName = "Blogs"
                 },
-                CardInformationDto = new CardInformationDto()
+                CardInformation = new CardInformationDto()
                 {
                     //https://saijogeorge.com/dummy-credit-card-generator/
                     CardNumber = "366252948156588",

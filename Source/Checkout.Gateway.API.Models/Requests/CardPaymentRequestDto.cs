@@ -5,7 +5,7 @@ namespace Checkout.Gateway.API.Models.Requests
 {
     public class CardPaymentRequestDto
     {
-        public CardInformationDto CardInformationDto { get; set; }
+        public CardInformationDto CardInformation { get; set; }
         
         public decimal Amount { get; set; }
 

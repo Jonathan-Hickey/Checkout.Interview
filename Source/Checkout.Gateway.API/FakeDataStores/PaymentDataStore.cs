@@ -7,13 +7,6 @@ using Checkout.Gateway.API.Models.Enums;
 
 namespace Checkout.Gateway.API.FakeDataStores
 {
-    public interface IPaymentDataStore
-    {
-        Payment AddPayment(Guid merchantId, int addressId, int cardInformationId, AcquirerBank acquirerBank, decimal amount, string currencyCode);
-        Payment GetPayment(Guid merchantId, Guid paymentId);
-
-    }
-
     public class PaymentDataStore : IPaymentDataStore
     {
         public readonly List<Payment> _payments;

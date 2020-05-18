@@ -6,7 +6,7 @@ namespace Checkout.Gateway.API.Services
     {
         public DateTime GetUtc()
         {
-            throw new NotImplementedException();
+            return DateTime.UtcNow;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Checkout.Gateway.API.Services;
+﻿using Checkout.Gateway.API.FakeDataStores;
+using Checkout.Gateway.API.Services;
 using Checkout.Gateway.API.Services.BankOfIreland;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +13,9 @@ namespace Checkout.Gateway.API.Extensions
             serviceCollection.AddSingleton<IDatetimeService, DatetimeService>();
             serviceCollection.AddSingleton<IPaymentService, PaymentService>();
             serviceCollection.AddSingleton<IAcquirerBankSelectionService, AcquirerBankSelectionService>();
-
+            serviceCollection.AddSingleton<ICardMaskingService, CardMaskingService>();
+            serviceCollection.AddSingleton<IHashService, HashService>();
+            
             serviceCollection.AddSingleton<IAcquiringBankService, BankOfIrelandAcquiringBankService>();
             
         }

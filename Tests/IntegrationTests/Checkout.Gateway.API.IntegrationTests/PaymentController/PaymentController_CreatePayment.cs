@@ -39,7 +39,7 @@ namespace Checkout.Gateway.API.IntegrationTests.PaymentController
                     FirstName = "Joe",
                     LastName = "Blogs"
                 },
-                CardInformationDto = new CardInformationDto()
+                CardInformation = new CardInformationDto()
                 {
                     CardNumber = "366252948156588",
                     FirstName = "Joe",
