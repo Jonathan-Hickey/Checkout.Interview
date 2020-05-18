@@ -30,7 +30,7 @@ namespace Checkout.Gateway.API.FakeDataStores
             var maxId = 1;
             if (_cards.Any())
             {
-                maxId = _cards.Max(c => c.CardInformationId);
+                maxId = _cards.Max(c => c.CardInformationId) + 1;
             }
 
             var card = new CardInformation

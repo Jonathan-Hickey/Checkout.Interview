@@ -16,6 +16,7 @@ namespace Checkout.Gateway.API.Extensions
             serviceCollection.AddSingleton<IMapper<Payment, CardPaymentResponseDto>, CardPaymentResponseMapper>();
             
             serviceCollection.AddSingleton<IPaymentStatusMapper, BankOfIrelandPaymentStatusMapper>();
+            serviceCollection.AddSingleton<IMapper<Payment, CardInformation, PaymentDetailResponseDto>, PaymentDetailResponseDtoMapper>();
         }
     }
 }

@@ -167,7 +167,7 @@ namespace Checkout.Gateway.API.Tests.Controllers
             var createCardPaymentService = new CreateCardPaymentService(bankOfIrelandAcquiringBankService, paymentRepository, acquirerBankSelectionService);
 
             var cardPaymentResponseMapper = new CardPaymentResponseMapper();
-            var paymentService = new PaymentService(createCardPaymentService, cardPaymentResponseMapper);
+            var paymentService = new PaymentService(createCardPaymentService, cardPaymentResponseMapper, null, null, null);
             var controller = new PaymentController(LoggerHelper.CreateLogger<PaymentController>(), paymentService);
             controller.ControllerContext = ControllerContextFactory.CreateControllerContextForClient(merchantId);
             

@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace Checkout.Gateway.API.Client
     public interface IPaymentClient
     {
         Task<CardPaymentResponseDto> CreateCardPaymentAsync(CardPaymentRequestDto cardPaymentRequestDto);
+
+        Task<PaymentDetailResponseDto> GetPaymentDetailsAsync(Guid paymentId);
     }
 
     public class PaymentClient : IPaymentClient
@@ -42,7 +45,7 @@ namespace Checkout.Gateway.API.Client
                 {
                     Authorization = new AuthenticationHeaderValue(Bearer, _accessToken),
                 },
-                RequestUri = _paymentRoutes.GetCardPaymentUri(),
+                RequestUri = _paymentRoutes.GetCreateCardPaymentUri(),
                 Method = HttpMethod.Post,
                 Content = new StringContent(JsonSerializer.Serialize(cardPaymentRequestDto), Encoding.UTF8, "application/json")
             });
@@ -52,7 +55,23 @@ namespace Checkout.Gateway.API.Client
                 throw new CheckoutGatewayException(response);
             }
 
-            return JsonSerializer.Deserialize<CardPaymentResponseDto>(await response.Content.ReadAsStringAsync());
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<CardPaymentResponseDto>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<PaymentDetailResponseDto> GetPaymentDetailsAsync(Guid paymentId)
+        {
+            var response =  await _httpClient.SendAsync(new HttpRequestMessage
+            {
+                Headers =
+                {
+                    Authorization = new AuthenticationHeaderValue(Bearer, _accessToken),
+                },
+                RequestUri = _paymentRoutes.GetPaymentDetailUri(paymentId), 
+                Method = HttpMethod.Get,
+            });
+
+            return JsonSerializer.Deserialize<PaymentDetailResponseDto>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }
 }

@@ -91,7 +91,21 @@ Tickets and Task (Breaking down the project)
     - Added Integration Project
         -  These tests will show the merchant interaction 
     - Adding Payment Endpoint
-        - 
+        - Process request
+            - Create inmemory data stores (Done)
+            - Decide which acquirier to use (Done)
+            - Call acquirer bank
+                - store response from acquirer (Done)
+                - map acquirer response to our response (Done)
+            - One way hash of card number (Done)
+            - Do not store CVV number (Done)
+            - Card masking (Done)
+            - Validation on card number (Todo)
+                - Luhn-algorithm
+                - Card Date validation
+            - Address validation
+                - Call to external service
+
     - Adding Getting Payment Details Endpoint
     - 
 
@@ -129,6 +143,7 @@ Maybe look into  this later
 https://saijogeorge.com/dummy-credit-card-generator/
 which leads me to https://www.geeksforgeeks.org/luhn-algorithm/
 https://money.howstuffworks.com/personal-finance/debt-management/credit-card1.htm
+https://stephenhaunts.com/2013/06/06/validating-card-numbers-with-the-luhn-check-algorithm/
 
 
 hash-and-salt-passwords-in-c-sharp

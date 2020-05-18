@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Checkout.Gateway.API.Enum;
 using Checkout.Gateway.API.Models;
 using Checkout.Gateway.API.Models.Enums;
@@ -9,17 +10,17 @@ namespace Checkout.Gateway.API.FakeDataStores
 {
     public class PaymentDataStore : IPaymentDataStore
     {
-        public readonly List<Payment> _payments;
+        public readonly List<Payment> Payments;
         
         public PaymentDataStore()
         {
-            _payments = new List<Payment>();
+            Payments = new List<Payment>();
         }
 
-
-        public Payment GetPayment(Guid merchantId, Guid paymentId)
+        public Task<Payment> GetPaymentAsync(Guid merchantId, Guid paymentId)
         {
-            return _payments.Single(p => p.MerchantId == merchantId && p.PaymentId == paymentId);
+            var payment = Payments.SingleOrDefault(p => p.MerchantId == merchantId && p.PaymentId == paymentId);
+            return Task.FromResult(payment);
         }
 
         public Payment AddPayment(Guid merchantId, int addressId, int cardInformationId, AcquirerBank acquirerBank, decimal amount, string currencyCode)
@@ -36,7 +37,7 @@ namespace Checkout.Gateway.API.FakeDataStores
                 Amount = amount
             };
 
-            _payments.Add(card);
+            Payments.Add(card);
 
             return card;
         }

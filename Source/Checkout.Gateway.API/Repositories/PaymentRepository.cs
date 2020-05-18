@@ -12,6 +12,9 @@ namespace Checkout.Gateway.API.Repositories
     {
         Task<Payment> AddPaymentAsync(AcquirerBank acquirerBank, Guid merchantId, CardPaymentRequestDto cardPaymentRequest);
         Task<Payment> UpdatePaymentAsync(Guid merchantId, Guid paymentId,string acquirerPaymentId, string acquirerPaymentStatus);
+
+        Task<Payment> GetPaymentAsync(Guid merchantId, Guid paymentId);
+
     }
 
     public class PaymentRepository : IPaymentRepository
@@ -50,13 +53,18 @@ namespace Checkout.Gateway.API.Repositories
             return Task.FromResult(payment);
         }
 
-        public Task<Payment> UpdatePaymentAsync(Guid merchantId, Guid paymentId, string acquirerPaymentId, string acquirerPaymentStatus)
+        public async Task<Payment> UpdatePaymentAsync(Guid merchantId, Guid paymentId, string acquirerPaymentId, string acquirerPaymentStatus)
         {
-            var payment = _paymentDataStore.GetPayment(merchantId, paymentId);
+            var payment =  await _paymentDataStore.GetPaymentAsync(merchantId, paymentId);
             payment.AcquirerPaymentId = acquirerPaymentId;
             payment.AcquirerPaymentStatus = acquirerPaymentStatus;
 
-            return Task.FromResult(payment);
+            return payment;
+        }
+
+        public Task<Payment> GetPaymentAsync(Guid merchantId, Guid paymentId)
+        {
+            return _paymentDataStore.GetPaymentAsync(merchantId, paymentId);
         }
     }
 }

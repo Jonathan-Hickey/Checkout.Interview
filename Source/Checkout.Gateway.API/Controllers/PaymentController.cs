@@ -40,9 +40,27 @@ namespace Checkout.Gateway.API.Controllers
 
             _logger.LogInformation("Incoming requestDto");
 
-            var response = await _paymentService.CreateCardPaymentAsync(merchantId, cardPaymentRequestDto);
+            var cardPayment = await _paymentService.CreateCardPaymentAsync(merchantId, cardPaymentRequestDto);
+            
+            return Created($"merchant/{merchantId}/payment/{cardPayment.PaymentId}", cardPayment); 
+        }
 
-            return Created("", response); 
+
+        [HttpGet]
+        [Route("{paymentId}")]
+        public async Task<IActionResult> GetPaymentDetailsAsync(Guid merchantId, Guid paymentId)
+        {
+            _logger.LogInformation($"Merchant {merchantId} is getting payment details for {paymentId}");
+
+            var payment = await _paymentService.GetPaymentAsync(merchantId, paymentId);
+
+            if (payment == null)
+            {
+                _logger.LogInformation($"Unable to find paymentId: {paymentId} for MerchantId: {merchantId}");
+                return NotFound($"Unable to find payment {paymentId}");
+            }
+
+            return Ok(payment);
         }
     }
 }
