@@ -32,6 +32,7 @@ namespace Checkout.Gateway.API
                     }
                 );
 
+            services.RegisterValidators();
             services.RegisterMappers();
             services.RegisterServices();
             services.RegisterClients();

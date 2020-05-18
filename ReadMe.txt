@@ -106,8 +106,8 @@ Tickets and Task (Breaking down the project)
             - Address validation
                 - Call to external service
 
-    - Adding Getting Payment Details Endpoint
-    - 
+    - Adding Getting Payment Details Endpoint (Done) 
+         
 
 ---------------------------------------------------------------------------------
 Notes

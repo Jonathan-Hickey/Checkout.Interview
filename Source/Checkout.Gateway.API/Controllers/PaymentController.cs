@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Checkout.Gateway.API.Models.Requests;
 using Checkout.Gateway.API.Services;
+using Checkout.Gateway.API.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,9 +16,13 @@ namespace Checkout.Gateway.API.Controllers
     {
         private readonly ILogger<PaymentController> _logger;
         private readonly IPaymentService _paymentService;
+        private readonly ICardValidator _cardValidator;
 
-        public PaymentController(ILogger<PaymentController> logger, IPaymentService paymentService)
+        public PaymentController(ILogger<PaymentController> logger, 
+                                 IPaymentService paymentService,
+                                 ICardValidator cardValidator)
         {
+            _cardValidator = cardValidator;
             _paymentService = paymentService;
             _logger = logger;
         }
@@ -32,8 +37,11 @@ namespace Checkout.Gateway.API.Controllers
                 return Unauthorized();
             };
 
-            if (cardPaymentRequestDto == null)
+            if (cardPaymentRequestDto == null 
+                || !_cardValidator.IsCardNumberValid(cardPaymentRequestDto.CardInformation.CardNumber)
+                || !_cardValidator.IsExpiryDateValid(cardPaymentRequestDto.CardInformation.ExpiryMonth, cardPaymentRequestDto.CardInformation.ExpiryYear))
             {
+                //Todo give back a real error message
                 _logger.LogInformation("cardPaymentRequestDto is null");
                 return BadRequest();
             }
@@ -42,7 +50,9 @@ namespace Checkout.Gateway.API.Controllers
 
             var cardPayment = await _paymentService.CreateCardPaymentAsync(merchantId, cardPaymentRequestDto);
             
-            return Created($"merchant/{merchantId}/payment/{cardPayment.PaymentId}", cardPayment); 
+            var request = HttpContext.Request;
+
+            return Created($"{request.Scheme}://{request.Host.Value}/merchant/{merchantId}/payment/{cardPayment.PaymentId}", cardPayment); 
         }
 
 

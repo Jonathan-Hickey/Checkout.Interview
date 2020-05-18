@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Checkout.Gateway.API.Clients;
 using Checkout.Gateway.API.Controllers;
@@ -15,6 +16,7 @@ using Checkout.Gateway.API.Repositories;
 using Checkout.Gateway.API.Services;
 using Checkout.Gateway.API.Services.BankOfIreland;
 using Checkout.Gateway.API.Tests.Helpers;
+using Checkout.Gateway.API.Validation;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -137,7 +139,11 @@ namespace Checkout.Gateway.API.Tests.Controllers
                     PaymentStatus = bankOfIrelandStatus
                 });
 
-            var controller = CreatePaymentController(merchantId, moqPaymentRepository.Object, moqBankOfIrelandAcquiringClient.Object);
+            var moqDatetimeService = new Mock<IDatetimeService>();
+
+            moqDatetimeService.Setup(d => d.GetUtc()).Returns(DateTime.ParseExact("01/05/2020", "dd/MM/yyyy", CultureInfo.InvariantCulture));
+
+            var controller = CreatePaymentController(merchantId, moqPaymentRepository.Object, moqBankOfIrelandAcquiringClient.Object, moqDatetimeService.Object);
 
             var result = await controller.CreatePaymentAsync(merchantId, cardPaymentRequest);
 
@@ -158,7 +164,7 @@ namespace Checkout.Gateway.API.Tests.Controllers
             expectedResponse.Should().BeEquivalentTo(expectedResponse);
         }
 
-        private PaymentController CreatePaymentController(Guid merchantId, IPaymentRepository paymentRepository, IBankOfIrelandClient bankOfIrelandClient)
+        private PaymentController CreatePaymentController(Guid merchantId, IPaymentRepository paymentRepository, IBankOfIrelandClient bankOfIrelandClient, IDatetimeService datetimeService)
         {
             var bankOfIrelandPaymentRequestMapper = new BankOfIrelandPaymentRequestMapper();
             var bankOfIrelandAcquiringBankService = new BankOfIrelandAcquiringBankService(bankOfIrelandClient, bankOfIrelandPaymentRequestMapper, paymentRepository);
@@ -168,7 +174,9 @@ namespace Checkout.Gateway.API.Tests.Controllers
 
             var cardPaymentResponseMapper = new CardPaymentResponseMapper();
             var paymentService = new PaymentService(createCardPaymentService, cardPaymentResponseMapper, null, null, null);
-            var controller = new PaymentController(LoggerHelper.CreateLogger<PaymentController>(), paymentService);
+
+            var cardValidator = new CardValidator(datetimeService);
+            var controller = new PaymentController(LoggerHelper.CreateLogger<PaymentController>(), paymentService, cardValidator);
             controller.ControllerContext = ControllerContextFactory.CreateControllerContextForClient(merchantId);
             
             return controller;
@@ -176,7 +184,7 @@ namespace Checkout.Gateway.API.Tests.Controllers
 
         private PaymentController CreatePaymentController(Guid merchantId)
         {
-            return CreatePaymentController(merchantId, null, null);
+            return CreatePaymentController(merchantId, null, null, null);
         }
     }
 }
