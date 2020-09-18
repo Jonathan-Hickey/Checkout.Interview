@@ -115,7 +115,7 @@ Notes
 2. Merchant: The seller of the product. For example, Apple or Amazon.
 3. Payment Gateway: Responsible for validating requests, storing card information and forwarding
 payment requests and accepting payment responses to and from the acquiring bank.
-4. Acquiring Bank: Allows us to do the actual retrieval of money from the shopper’s card and payout to the
+4. Acquiring Bank: Allows us to do the actual retrieval of money from the shopperâ€™s card and payout to the
 merchant. It also performs some validation of the card information and then sends the payment details
 to the appropriate 3rd party organization for processing.
 
